@@ -89,7 +89,7 @@ Window::Window(const int width, const int height, const char* name)
 	wr.top = 100;
 	wr.bottom = height + wr.top;
 	
-	if (FAILED(AdjustWindowRect(&wr, WINDOW_STYLE, false)))
+	if (AdjustWindowRect(&wr, WINDOW_STYLE, false) == 0)
 	{
 		throw HWND_LAST_EXCEPT();
 	}
