@@ -1,4 +1,42 @@
 #include "Window.h"
+#include <sstream>
+
+// Window Excpetion stuff.
+Window::Exception::Exception(const int line, const char* file, const HRESULT hr) noexcept
+	: BaseException(line, file), m_hr(hr)
+{
+}
+
+std::string Window::Exception::TranslateErrorCode(HRESULT hr) noexcept
+{
+	char* pMsgBuf = nullptr;
+	const DWORD nMsgLen = FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+		nullptr, hr, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), reinterpret_cast<LPSTR>(&pMsgBuf), 0, nullptr);
+
+	if (nMsgLen == 0)
+	{
+		return "Unidentified Error Code!";
+	}
+
+	std::string errorString = pMsgBuf;
+	LocalFree(pMsgBuf);
+
+	return errorString;
+}
+
+const char* Window::Exception::what() const noexcept
+{
+	std::ostringstream oss;
+
+	oss << GetType() << std::endl
+		<< "[Error Code] " << GetErrorCode() << std::endl
+		<< "[Description] " << GetErrorString() << std::endl
+		<< GetOriginString();
+
+	m_whatBuffer = oss.str();
+
+	return m_whatBuffer.c_str();
+}
 
 // Window Class stuff.
 Window::WindowClass Window::WindowClass::WndClass;
@@ -42,7 +80,7 @@ HINSTANCE Window::WindowClass::GetInstance() noexcept
 
 // Window stuff.
 
-Window::Window(const int width, const int height, const char* name) noexcept
+Window::Window(const int width, const int height, const char* name)
 	: m_width(width), m_height(height)
 {
 	RECT wr;
@@ -50,12 +88,20 @@ Window::Window(const int width, const int height, const char* name) noexcept
 	wr.right = width + wr.left;
 	wr.top = 100;
 	wr.bottom = height + wr.top;
-
-	AdjustWindowRect(&wr, WINDOW_STYLE, false);
+	
+	if (FAILED(AdjustWindowRect(&wr, WINDOW_STYLE, false)))
+	{
+		throw HWND_LAST_EXCEPT();
+	}
 
 	// Create window and get hWnd.
 	m_hwnd = CreateWindow(WindowClass::GetName(), name, WINDOW_STYLE, CW_USEDEFAULT, CW_USEDEFAULT, 
 		wr.right - wr.left, wr.bottom - wr.top, nullptr, nullptr, WindowClass::GetInstance(), this);
+
+	if (m_hwnd == nullptr)
+	{
+		throw HWND_LAST_EXCEPT();
+	}
 
 	// Show the window.
 	ShowWindow(m_hwnd, SW_SHOWDEFAULT);

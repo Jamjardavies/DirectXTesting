@@ -1,11 +1,33 @@
 #pragma once
 
 #include "JJWindows.h"
+#include "BaseException.h"
 
-#define WINDOW_STYLE	WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU
+#define WINDOW_STYLE			WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU
+
+// Error Exception Helper Macro
+#define HWND_EXCEPT(hr)			Window::Exception(__LINE__, __FILE__, hr)
+#define HWND_LAST_EXCEPT()		Window::Exception(__LINE__, __FILE__, GetLastError())
 
 class Window
 {
+public:
+	class Exception : public BaseException
+	{
+	private:
+		HRESULT m_hr;
+
+	public:
+		Exception(int line, const char* file, HRESULT hr) noexcept;
+
+		static std::string TranslateErrorCode(HRESULT hr) noexcept;
+		virtual const char* what() const noexcept override;
+
+		HRESULT GetErrorCode() const noexcept { return m_hr; }
+		std::string GetErrorString() const noexcept { return TranslateErrorCode(m_hr); }
+		virtual const char* GetType() const noexcept override { return "Window Exception"; }
+	};
+
 private:
 	class WindowClass
 	{
@@ -34,10 +56,9 @@ private:
 	LRESULT HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 
 public:
-	Window(int width, int height, const char* name) noexcept;
+	Window(int width, int height, const char* name);
 	~Window();
 
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
 };
-
