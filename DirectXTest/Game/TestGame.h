@@ -9,6 +9,6 @@ public:
 	virtual ~TestGame() override;
 
 	virtual void Update(float deltaTime) override;
-	virtual void Draw(float deltaTime) override;
+	virtual void Draw() override;
 };
 

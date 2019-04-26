@@ -112,6 +112,14 @@ Window::~Window()
 	DestroyWindow(m_hwnd);
 }
 
+void Window::SetTitle(const std::string& title) const
+{
+	if (SetWindowText(m_hwnd, title.c_str()) == 0)
+	{
+		throw HWND_LAST_EXCEPT();
+	}
+}
+
 std::optional<int> Window::ProcessMessages()
 {
 	MSG msg;

@@ -11,39 +11,51 @@
     <Filter Include="Game">
       <UniqueIdentifier>{1ac85c3a-b7cf-4f05-8b89-e2894ff5e2bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Source">
+      <UniqueIdentifier>{ab44642e-dae8-43e3-96bf-2e8d8d350b61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Header">
+      <UniqueIdentifier>{fe2c88c2-2726-4f1d-af7c-9e846d43c429}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\BaseException.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Game.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Window.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Game\TestGame.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\WinMain.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\BaseException.cpp">
+      <Filter>Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Game.cpp">
+      <Filter>Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Timer.cpp">
+      <Filter>Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Window.cpp">
+      <Filter>Engine\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\BaseException.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Game.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\JJWindows.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Window.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Game\TestGame.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Window.h">
+      <Filter>Engine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Timer.h">
+      <Filter>Engine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\JJWindows.h">
+      <Filter>Engine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Game.h">
+      <Filter>Engine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\BaseException.h">
+      <Filter>Engine\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

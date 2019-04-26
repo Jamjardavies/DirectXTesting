@@ -1,6 +1,7 @@
 #include "TestGame.h"
 
 TestGame::TestGame()
+	: Game("Test Game")
 {
 
 }
@@ -9,13 +10,14 @@ TestGame::~TestGame()
 {
 
 }
-
-void TestGame::Update(float deltaTime)
+float time = 0;
+void TestGame::Update(const float deltaTime)
 {
-
+	time += deltaTime;
+	Window.SetTitle(std::to_string(time));
 }
 
-void TestGame::Draw(float deltaTime)
+void TestGame::Draw()
 {
 
 }

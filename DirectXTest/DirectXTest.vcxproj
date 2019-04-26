@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Engine\BaseException.cpp" />
     <ClCompile Include="Engine\Game.cpp" />
+    <ClCompile Include="Engine\Timer.cpp" />
     <ClCompile Include="Engine\Window.cpp" />
     <ClCompile Include="Game\TestGame.cpp" />
     <ClCompile Include="Game\WinMain.cpp" />
@@ -29,6 +30,7 @@
     <ClInclude Include="Engine\BaseException.h" />
     <ClInclude Include="Engine\Game.h" />
     <ClInclude Include="Engine\JJWindows.h" />
+    <ClInclude Include="Engine\Timer.h" />
     <ClInclude Include="Engine\Window.h" />
     <ClInclude Include="Game\TestGame.h" />
   </ItemGroup>

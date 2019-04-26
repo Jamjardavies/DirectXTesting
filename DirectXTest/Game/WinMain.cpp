@@ -1,29 +1,16 @@
 #include "Window.h"
 #include "Game.h"
 
-#include <optional>
-
-#include "../Game/TestGame.h"
+#include "TestGame.h"
+#include "Timer.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	try
 	{
-		Game* game = new TestGame();
+		TestGame game;
 
-		Window wnd(800, 600, "My Window");
-
-		std::optional<int> result;
-
-		while (!((result = Window::ProcessMessages())))
-		{
-			game->Update(0.0f);
-			game->Draw(0.0f);
-		}
-
-		delete game;
-
-		return result.value();
+		return game.Run();
 	}
 	catch (const BaseException& e)
 	{
