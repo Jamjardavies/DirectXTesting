@@ -1,26 +1,29 @@
 #include "Window.h"
+#include "Game.h"
+
+#include <optional>
+
+#include "../Game/TestGame.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	try
 	{
+		Game* game = new TestGame();
+
 		Window wnd(800, 600, "My Window");
 
-		MSG msg;
-		BOOL result;
+		std::optional<int> result;
 
-		while ((result = GetMessage(&msg, nullptr, 0, 0)) > 0)
+		while (!((result = Window::ProcessMessages())))
 		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+			game->Update(0.0f);
+			game->Draw(0.0f);
 		}
 
-		if (result == -1)
-		{
-			return -1;
-		}
+		delete game;
 
-		return msg.wParam;
+		return result.value();
 	}
 	catch (const BaseException& e)
 	{

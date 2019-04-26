@@ -3,6 +3,8 @@
 #include "JJWindows.h"
 #include "BaseException.h"
 
+#include <optional>
+
 #define WINDOW_STYLE			WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU
 
 // Error Exception Helper Macro
@@ -61,4 +63,6 @@ public:
 
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
+
+	static std::optional<int> ProcessMessages();
 };
