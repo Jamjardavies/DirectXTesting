@@ -13,7 +13,8 @@ int Game::Run()
 
 	std::optional<int> result;
 
-	while (!((result = Window::ProcessMessages())))
+	// ToDo: Change nullptr to our handle when window is minimised.
+	while (!((result = Window::ProcessMessages(nullptr))))
 	{
 		const float mark = timer.Peek();
 		const float deltaTime = mark - lastTime;

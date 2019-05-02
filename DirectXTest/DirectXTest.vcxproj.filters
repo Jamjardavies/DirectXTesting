@@ -17,6 +17,12 @@
     <Filter Include="Engine\Header">
       <UniqueIdentifier>{fe2c88c2-2726-4f1d-af7c-9e846d43c429}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Header\Debugging">
+      <UniqueIdentifier>{9806f59e-8040-48c9-97fb-acccb3dbfccc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Source\Debugging">
+      <UniqueIdentifier>{4205f91e-23e9-4644-b31f-c47fa79a7dfb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\TestGame.cpp">
@@ -37,6 +43,12 @@
     <ClCompile Include="Engine\Window.cpp">
       <Filter>Engine\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Graphics.cpp">
+      <Filter>Engine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Debugging\DxgiInfoManager.cpp">
+      <Filter>Engine\Source\Debugging</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\TestGame.h">
@@ -56,6 +68,12 @@
     </ClInclude>
     <ClInclude Include="Engine\BaseException.h">
       <Filter>Engine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Graphics.h">
+      <Filter>Engine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Debugging\DxgiInfoManager.h">
+      <Filter>Engine\Header\Debugging</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

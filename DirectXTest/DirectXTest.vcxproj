@@ -20,7 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\BaseException.cpp" />
+    <ClCompile Include="Engine\Debugging\DxgiInfoManager.cpp" />
     <ClCompile Include="Engine\Game.cpp" />
+    <ClCompile Include="Engine\Graphics.cpp" />
     <ClCompile Include="Engine\Timer.cpp" />
     <ClCompile Include="Engine\Window.cpp" />
     <ClCompile Include="Game\TestGame.cpp" />
@@ -28,7 +30,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BaseException.h" />
+    <ClInclude Include="Engine\Debugging\DxgiInfoManager.h" />
     <ClInclude Include="Engine\Game.h" />
+    <ClInclude Include="Engine\Graphics.h" />
     <ClInclude Include="Engine\JJWindows.h" />
     <ClInclude Include="Engine\Timer.h" />
     <ClInclude Include="Engine\Window.h" />

@@ -44,9 +44,9 @@ Window::WindowClass Window::WindowClass::WndClass;
 Window::WindowClass::WindowClass() noexcept
 	: m_hInst(GetModuleHandle(nullptr))
 {
-	WNDCLASSEX wc = { 0 };
+	WNDCLASSEX wc = { };
 
-	wc.cbSize = sizeof(wc);
+	wc.cbSize = sizeof wc;
 	wc.style = CS_OWNDC;
 	wc.lpfnWndProc = HandleMsgSetup;
 	wc.cbClsExtra = 0;
@@ -105,6 +105,9 @@ Window::Window(const int width, const int height, const char* name)
 
 	// Show the window.
 	ShowWindow(m_hwnd, SW_SHOWDEFAULT);
+
+	// Create graphics object.
+	m_graphics = std::make_unique<Graphics>(m_hwnd);
 }
 
 Window::~Window()
@@ -120,11 +123,11 @@ void Window::SetTitle(const std::string& title) const
 	}
 }
 
-std::optional<int> Window::ProcessMessages()
+std::optional<int> Window::ProcessMessages(const HWND hwnd)
 {
 	MSG msg;
 
-	while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+	while (PeekMessage(&msg, hwnd, 0, 0, PM_REMOVE))
 	{
 		if (msg.message == WM_QUIT)
 		{
@@ -138,11 +141,11 @@ std::optional<int> Window::ProcessMessages()
 	return std::nullopt;
 }
 
-LRESULT WINAPI Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
+LRESULT WINAPI Window::HandleMsgSetup(const HWND hwnd, const UINT msg, const WPARAM wParam, const LPARAM lParam) noexcept
 {
 	if (msg != WM_NCCREATE)
 	{
-		return DefWindowProc(hWnd, msg, wParam, lParam);
+		return DefWindowProc(hwnd, msg, wParam, lParam);
 	}
 
 	// Get the param passed in from CreateWidnow() to store window class pointer.
@@ -150,13 +153,13 @@ LRESULT WINAPI Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM
 	Window* const pWnd = static_cast<Window*>(pCreate->lpCreateParams);
 
 	// Set WinAPI managed user data to store ptr to window class.
-	SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pWnd));
+	SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pWnd));
 
 	// Set message proc to normal (non-setup) handler now setup is complete.
-	SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&Window::HandleMsgThunk));
+	SetWindowLongPtr(hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&Window::HandleMsgThunk));
 
 	// Forward message to window class handler.
-	return pWnd->HandleMsg(hWnd, msg, wParam, lParam);
+	return pWnd->HandleMsg(hwnd, msg, wParam, lParam);
 }
 
 LRESULT WINAPI Window::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
